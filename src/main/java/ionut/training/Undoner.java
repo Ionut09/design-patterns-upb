@@ -7,10 +7,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Undoner {
-    static String path = "/home/ionut/Desktop/workspace/design-patterns-poli/src/main/java/ionut/training/oop";
+    static String stringPath = "./src/main/java/ionut/training/oop";
 
     public static void main(String[] args) throws IOException {
-        Files.walk(Paths.get(path), 100)
+        Files.walk(Paths.get(stringPath), 100)
              .map(Path::toFile)
              .filter(File::isFile)
              .filter(f -> f.getName().endsWith(".java"))
