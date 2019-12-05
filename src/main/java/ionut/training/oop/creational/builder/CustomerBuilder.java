@@ -19,7 +19,10 @@ public class CustomerBuilder {
         return this;
     }
 
-    //..
+    public CustomerBuilder addLabel(String label) {
+        customer.getLabels().add(label);
+        return this;
+    }
 
     public Customer build() {
         return customer;
