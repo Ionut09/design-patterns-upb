@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Undoner {
-    static String stringPath = "./src/main/java/ionut/training/oop";
+    private final static String stringPath = "./src/main/java/ionut/training/oop";
 
     public static void main(String[] args) throws IOException {
         Files.walk(Paths.get(stringPath), 100)

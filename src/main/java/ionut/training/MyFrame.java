@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class MyFrame extends JFrame {
     static {
-        UIUtils.setUIFont();
+        UIUtils.setUIFont(25);
     }
 
     public JButton button = new JButton("Click me");
