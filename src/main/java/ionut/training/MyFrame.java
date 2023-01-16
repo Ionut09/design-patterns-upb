@@ -10,7 +10,7 @@ public class MyFrame extends JFrame {
     }
 
     public JButton button = new JButton("Click me");
-    JPanel panel = new JPanel(new GridLayout(1, 1));
+    public JPanel panel = new JPanel(new GridLayout(1, 1));
 
     public MyFrame() {
 

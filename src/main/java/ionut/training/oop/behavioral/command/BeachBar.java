@@ -5,76 +5,71 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-
-import static ionut.training.ThreadUtils.sleep;
 
 @Slf4j
 public class BeachBar {
-    public static void main(String... args) throws ExecutionException, InterruptedException {
-        Barman barman = new Barman();
-
-        ExecutorService threadPool = Executors.newFixedThreadPool(2);
-
-        Callable<Beer> beerOrder = () -> barman.purBeer();
-        Callable<Vodka> vodkaOrder = barman::purVodka; //method reference
-
-        log.debug("Submitting my orders");
-        Future<Beer> futureBeer = threadPool.submit(beerOrder);
-        Future<Vodka> futureVodka = threadPool.submit(vodkaOrder);
-
-        log.debug("Waitress went away with my order...");
-        Beer beer = futureBeer.get();
-        Vodka vodka = futureVodka.get();
-
-        log.debug("Waiting for my drinks..");
-        log.debug("Got my drinks!" + beer + "   " + vodka);
-    }
+	
+	public static void main(String[] args) throws ExecutionException, InterruptedException {
+		
+		Barman barman = new Barman(); //receiver
+		
+		ExecutorService invoker = Executors.newFixedThreadPool(2);
+		
+		// Beer call()
+		Callable<Beer> beerCommand = () -> barman.purrBeer();
+		Callable<Vodka> vodkaCommand = barman::purrVodka; //method reference
+		
+		log.debug("Submitting my beer order");
+		Future<Beer> beerFuture = invoker.submit(beerCommand);
+		
+		log.debug("Submitting my vodka order");
+		Future<Vodka> vodkaFuture = invoker.submit(vodkaCommand);
+		
+		log.debug("Waitress went away with my orders");
+		log.debug("Waiting for my orders.");
+		Beer beer = beerFuture.get();
+		Vodka vodka = vodkaFuture.get();
+		log.debug("Got my beer {} and vodka: {}", beer, vodka);
+		
+	}
+	
 }
 
-
-@Data
-@AllArgsConstructor
 @Slf4j
 class Barman {
-    public Beer purBeer() {
-        log.debug("Puring beer...");
-        sleep(1000);
-        return new Beer("Peroni");
-    }
-
-    public Vodka purVodka() {
-        log.debug("Puring vodka...");
-        sleep(1000);
-        return new Vodka("Kresokeva");
-    }
+	//	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Barman.class);
+	
+	public Beer purrBeer() {
+		log.debug("Purring beer");
+		return new Beer("Becks");
+	}
+	
+	public Vodka purrVodka() {
+		log.debug("Purring vodka");
+		return new Vodka("Kreskova");
+	}
 }
 
-@Data
 @AllArgsConstructor
+@ToString
 class Beer {
-    private String name;
 
-    @Override
-    public String toString() {
-        return "Beer{" +
-                "'" + name + '\'' +
-                '}';
-    }
+//	@Override
+//	public String toString() {
+//		return "Beer{" +
+//			       "name='" + name + '\'' +
+//			       '}';
+//	}
+	
+	private String name;
 }
 
-@Data
 @AllArgsConstructor
+@ToString
 class Vodka {
-    private String name;
-
-    @Override
-    public String toString() {
-        return "Vodka{" +
-                "'" + name + '\'' +
-                '}';
-    }
+	
+	private String name;
 }
